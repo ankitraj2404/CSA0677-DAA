@@ -1,0 +1,40 @@
+//armstromg number//
+
+#include<stdio.h>
+
+int main()
+{
+    int num,rem,sum=0;
+    int count=0;
+
+    printf("Enterr the number: ");
+    count++;
+    scanf("%d",&num);
+    count++;
+
+    int temp=num;
+
+    while(num!=0)
+    {
+        rem=num%10;
+        sum+=(rem*rem*rem);
+        num=num/10;
+        count++;
+    }
+
+    if(temp==sum)
+    {
+        printf("The given number %d is an armstrong number",temp);
+        count++;
+    }
+    else
+    {
+        printf("The given number %d is not an armstrong number",temp);
+        count++;
+    }
+    
+    printf("\n");
+    printf("The time complexity is: %d",count);
+
+    return 0;
+}
