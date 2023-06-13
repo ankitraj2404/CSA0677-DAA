@@ -1,0 +1,34 @@
+//factorial of a number//
+
+#include<stdio.h>
+
+
+int main()
+{
+    int num,fact=1,count=0;
+
+    printf("Enter the limit: ");
+    count++;
+    scanf("%d",&num);
+    count++;
+
+    if(num<0)
+    {
+        printf("negative number!!!!!!...enter positive number");
+        count++;
+    }
+
+    for(int i=1;i<=num;i++)
+    {
+        fact=fact*i;
+        count++;
+    }
+
+    printf("The factorial of %d is: %d",num,fact);
+    count++;
+    printf("\n");
+    count++;
+    printf("the time complexity is: %d",count);
+
+    return 0;
+}
