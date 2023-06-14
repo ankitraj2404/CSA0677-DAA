@@ -1,0 +1,60 @@
+#include <stdio.h>
+
+// Function to find the maximum and minimum values in a list
+void findMaxMin(int arr[], int left, int right, int *max, int *min) {
+    // Base case: If the list contains only one element
+    if (left == right) {
+        *max = arr[left];
+        *min = arr[left];
+        return;
+    }
+
+    // If the list contains more than one element, divide it into two halves
+    int mid, max1, max2, min1, min2;
+
+    if (left + 1 == right) {
+        // List contains exactly two elements
+        if (arr[left] < arr[right]) {
+            *max = arr[right];
+            *min = arr[left];
+        } else {
+            *max = arr[left];
+            *min = arr[right];
+        }
+        return;
+    }
+
+    mid = (left + right) / 2;
+    findMaxMin(arr, left, mid, &max1, &min1);
+    findMaxMin(arr, mid + 1, right, &max2, &min2);
+
+    // Compare the maximum and minimum values of the two halves
+    if (max1 > max2)
+        *max = max1;
+    else
+        *max = max2;
+
+    if (min1 < min2)
+        *min = min1;
+    else
+        *min = min2;
+}
+
+// Example usage
+int main() {
+    int arr[] = {5, 12, 4, 9, 18, 7};
+    int arrSize = sizeof(arr) / sizeof(arr[0]);
+    int max, min;
+
+    findMaxMin(arr, 0, arrSize - 1, &max, &min);
+
+    printf("List: ");
+    for (int i = 0; i < arrSize; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+
+    printf("Maximum value: %d\n", max);
+    printf("Minimum value: %d\n", min);
+
+    return 0;
+}
