@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define N 4
+
+void printAssignments(int assignments[N]);
+
+bool isSafe(int person, int job, int costMatrix[N][N], bool assignedPerson[N], bool assignedJob[N], int assignments[N], int currentCost, int* minCost)
+{
+    if (!assignedPerson[person] && !assignedJob[job])
+    {
+        currentCost += costMatrix[person][job];
+
+        if (person == N - 1)
+        {
+            if (currentCost < *minCost)
+            {
+                *minCost = currentCost;
+                printAssignments(assignments);
+            }
+            return true;
+        }
+
+        assignedPerson[person] = true;
+        assignedJob[job] = true;
+        assignments[person] = job;
+
+        for (int j = 0; j < N; j++)
+        {
+            if (isSafe(person + 1, j, costMatrix, assignedPerson, assignedJob, assignments, currentCost, minCost))
+                return true;
+        }
+
+        assignedPerson[person] = false;
+        assignedJob[job] = false;
+    }
+
+    return false;
+}
+
+void solveAssignmentProblem(int costMatrix[N][N])
+{
+    bool assignedPerson[N] = { false };
+    bool assignedJob[N] = { false };
+    int assignments[N];
+    int minCost = INT_MAX;
+
+    if (isSafe(0, 0, costMatrix, assignedPerson, assignedJob, assignments, 0, &minCost) == false)
+        printf("No feasible solution found.\n");
+}
+
+void printAssignments(int assignments[N])
+{
+    printf("Assignments:\n");
+    for (int i = 0; i < N; i++)
+    {
+        printf("Person %c -> Job %d\n", 'A' + i, assignments[i] + 1);
+    }
+    printf("\n");
+}
+
+int main()
+{
+    int costMatrix[N][N] = {
+        {12, 8, 9, 10},
+        {11, 10, 10, 9},
+        {9, 11, 8, 12},
+        {11, 9, 23, 7}
+    };
+
+    solveAssignmentProblem(costMatrix);
+
+    return 0;
+}
